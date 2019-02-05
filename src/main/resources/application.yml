@@ -6,7 +6,21 @@ spring:
     config:
       server:
         git:
+          #can be changed to env vars, but for now only one repo to store configs
           uri: https://github.com/amp-news/amp-configs.git
+
+          #expect secret data from env vars
           username: ${config.server.git.username}
           password: ${config.server.git.pass}
+
+          #would check is repo accessible on startup
           clone-on-start: true
+
+          #make sure the server fetches the configuration when the local repository is corrupted
+          force-pull: true
+
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://${eureka.server.host}:${eureka.server.port}/eureka/
